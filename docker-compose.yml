@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:14
+    container_name: postgres-claims
+    environment:
+      POSTGRES_DB: claims_portal
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin123
+    ports:
+      - "6669:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - claims-net
+
+  backend:
+    build:
+      context: ./Backend
+    container_name: backend-claims
+    ports:
+      - "6010:6010"
+    depends_on:
+      - postgres
+    networks:
+      - claims-net
+
+  frontend:
+    build:
+      context: ./Frontend
+    container_name: frontend-claims
+    ports:
+      - "7081:80"
+    networks:
+      - claims-net
+
+  hr-asset:
+    build:
+      context: ./HR
+    container_name: hr-asset-claims
+    ports:
+      - "7082:80"
+    networks:
+      - claims-net
+
+volumes:
+  pgdata:
+
+networks:
+  claims-net:
+
