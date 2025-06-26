@@ -37,7 +37,7 @@ const pool = new Pool({
   user: 'postgres',
   host: 'postgres69',
   database: 'claims_portal',
-  password: admin123,
+  password: 'admin123',
   port: 5432,
 });
 
